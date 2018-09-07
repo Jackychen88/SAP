@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nugget name="ZBCREP001">
+ <PROG NAME="ZBCREP001" VARCL="X" SUBC="1" RMAND="008" RLOAD="E" FIXPT="X" UCCHECK="X">
+  <textPool>
+   <language SPRAS="1">
+    <textElement ID="R" ENTRY="ZBCREP001" LENGTH="9 "/>
+   </language>
+   <language SPRAS="E">
+    <textElement ID="R" ENTRY="ZBCREP001" LENGTH="9 "/>
+   </language>
+  </textPool>
+  <source>*&amp;-----------------------------------------------------------------*
+
+report zbcrep001 message-id at no standard page heading.
+
+* The dynamic program source table.
+data: begin of inctabl occurs 10,
+            line(150),
+        end of inctabl.
+
+start-of-selection.
+
+*+START	IT/36306/2011(Old) Global SAP ECC 6.0 Upgrade
+   call function &apos;UPLOAD&apos;
+         exporting
+              filetype        = &apos;ASC&apos;
+         tables
+              data_tab        = inctabl
+         exceptions
+              conversion_error
+              invalid_table_width
+              invalid_type
+              no_batch
+              unknown_error.
+*+END	IT/36306/2011(Old) Global SAP ECC 6.0 Upgrade
+
+**+START	IT/36306/2011(New) Global SAP ECC 6.0 Upgrade
+*  CALL FUNCTION &apos;Z_UPLOAD_DOWNLOAD&apos;
+*    EXPORTING
+*      FUNCTION_TYPE                 = &apos;U&apos; &quot;U = Upload, D = Download
+**     BIN_FILESIZE                  =
+**     FILE_NAME                     = P_GD_FILE
+**     HEADER_LINE                   =
+**   IMPORTING
+**      FILELENGTH                    = FILELENGTH
+*   TABLES
+*      DATA_TAB                      = inctabl
+**     FIELDNAMES                    =
+*   EXCEPTIONS
+**     FILE_OPEN_DIALOG_FAILED       = 1
+**     CNTL_ERROR                    = 2
+**     ERROR_NO_GUI                  = 3
+**     NOT_SUPPORTED_BY_GUI          = 4
+*      UNKNOWN_ERROR                 = 5
+**     CONVERSION_FAILED             = 6
+**     FILE_OPEN_ERROR               = 7
+**     FILE_READ_ERROR               = 8
+*      NO_BATCH                      = 9
+**     GUI_REFUSE_FILETRANSFER       = 10
+*      INVALID_TYPE                  = 11
+**     NO_AUTHORITY                  = 12
+**     BAD_DATA_FORMAT               = 13
+**     HEADER_NOT_ALLOWED            = 14
+**     SEPARATOR_NOT_ALLOWED         = 15
+**     FILESIZE_NOT_ALLOWED          = 16
+**     HEADER_TOO_LONG               = 17
+**     UNKNOWN_DP_ERROR              = 18
+**     ACCESS_DENIED                 = 19
+**     DP_OUT_OF_MEMORY              = 20
+**     DISK_FULL                     = 21
+**     DP_TIMEOUT                    = 22
+**     FILE_WRITE_ERROR              = 23
+**     DP_ERROR_CREATE               = 24
+**     DP_ERROR_SEND                 = 25
+**     DP_ERROR_WRITE                = 26
+**     FILE_NOT_FOUND                = 27
+**     DATAPROVIDER_EXCEPTION        = 28
+**     CONTROL_FLUSH_ERROR           = 29
+**     OTHERS                        = 30
+*            .
+**+END IT/36306/2011(New) Global SAP ECC 6.0 Upgrade
+
+
+* Create and run the dynamic program
+  insert report &apos;ZDYNPRO&apos;(001) from inctabl.
+  submit zdynpro.</source>
+ </PROG>
+</nugget>
