@@ -1,2 +1,2 @@
 # SAP
-Just used for implements the old PGM to another clint of SAP
+Just used to implements the old program to another new client of SAP
